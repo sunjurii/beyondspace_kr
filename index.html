@@ -77,14 +77,13 @@ const seats = [
   [49, 510, 30], [50, 510, 100], [51, 510, 170], [52, 510, 240], [53, 510, 310]
 ];
 
-const sheetId = "1cKx6lngayU_DIGUBg_403uC2phn0ZXGYyJK4037IYfs"; 
-const apiKey = "AIzaSyDER31yuEa0w-7ALKHLYoF-pZVpWXhe5tY"; 
+const sheetId = "1cKx6lngayU_DIGUBg_403uC2phn0ZXGYyJK4037IYfs";
+const apiKey = "AIzaSyDER31yuEa0w-7ALKHLYoF-pZVpWXhe5tY";
 
 async function fetchOccupiedSeats() {
-  const url = `const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/Sheet1!A1:B100?key=${apiKey}`;
+  const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/Sheet1!A1:B100?key=${apiKey}`;
   const response = await fetch(url);
   const data = await response.json();
-    console.log(data); // 📢 여기에 추가! 받아온 데이터 직접 보기
   const values = data.values || [];
 
   const occupiedSeats = new Set();
@@ -95,6 +94,7 @@ async function fetchOccupiedSeats() {
   });
 
   return occupiedSeats;
+}
 }
 
 function renderSeats(occupiedSet) {
