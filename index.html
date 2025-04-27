@@ -95,6 +95,7 @@ function renderSeats(occupiedSet) {
     seat.innerText = num;
     seat.style.left = left + 'px';
     seat.style.top = top + 'px';
+    seat.innerText = seatNum;
     if (occupiedSet.has(num)) {
       seat.classList.add('occupied');
     }
