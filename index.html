@@ -87,7 +87,7 @@ async function fetchOccupiedSeats() {
   const values = data.values || [];
 
   const occupiedSeats = new Set();
-  values.slice(1).forEach(([seatNum, status]) => {
+  values.forEach(([seatNum, status]) => {
     if (status && status.toLowerCase() === 'occupied') {
       occupiedSeats.add(Number(seatNum));
     }
