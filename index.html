@@ -84,18 +84,25 @@ async function fetchOccupiedSeats() {
   const response = await fetch(url);
   const data = await response.json();
   const values = data.values || [];
-  const occupiedSeats = values.flat().map(Number);
-  return new Set(occupiedSeats);
+
+  // 첫 행(헤더)는 빼고 처리
+  const occupiedSeats = new Set();
+  values.slice(1).forEach(([seatNum, status]) => {
+    if (status && status.toLowerCase() === 'occupied') {
+      occupiedSeats.add(Number(seatNum));
+    }
+  });
+
+  return occupiedSeats;
 }
 
 function renderSeats(occupiedSet) {
   seats.forEach(([num, left, top]) => {
     const seat = document.createElement('div');
     seat.className = 'seat';
-    seat.innerText = num;
+    seat.innerText = num;   // 여기 수정
     seat.style.left = left + 'px';
     seat.style.top = top + 'px';
-    seat.innerText = seatNum;
     if (occupiedSet.has(num)) {
       seat.classList.add('occupied');
     }
@@ -104,7 +111,6 @@ function renderSeats(occupiedSet) {
 }
 
 fetchOccupiedSeats().then(renderSeats);
-
    // 5분(300초)마다 자동 새로고침
   setInterval(() => {
     location.reload();
