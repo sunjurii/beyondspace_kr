@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>공유오피스 자리맵</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #efd03a;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+  }
+  #container {
+    position: relative;
+    width: 585px;
+    height: 445px;
+    background-color: #efd03a;
+    margin: 20px auto;
+    border: none; /* 컨테이너 테두리 삭제 */
+  }
+  .seat {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background-color: #ffffff; /* 기본 흰색 (빈 자리) */
+    border: 1px solid #aaa;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 14px;
+    color: #333; /* 글씨는 어두운 색으로 */
+  }
+  .seat.occupied {
+    background-color: #ff4d4d; /* 예약된 자리 빨간색 */
+    color: #fff; /* 텍스트는 흰색 */
+  }
+  .status-guide {
+    margin: 20px auto;
+    font-size: 16px;
+  }
+  .status-guide span {
+    margin: 0 10px;
+  }
+</style>
+</head>
+<body>
+
+<!-- 로고 이미지 -->
+<div style="margin-bottom: 10px;">
+  <img src="logo.png" alt="공유 오피스 로고" style="height:80px;">
+</div>
+
+<!-- 자리 설명 -->
+<div class="status-guide">
+  <span>🔴 자리 있음</span> 
+  <span>⚪️ 빈 자리</span> <!-- 아이콘도 흰색 느낌으로 수정 -->
+</div>
+
+<!-- 자리 맵 -->
+<div id="container"></div>
+
+<script>
+// 좌표 데이터 [번호, left, top]
+const seats = [
+  [1, 30, 30], [2, 30, 100], [3, 30, 170], [4, 30, 240],
+  [5, 120, 30], [6, 120, 70], [7, 120, 130], [8, 120, 170], [9, 120, 230], [10, 120, 270],
+
+  [11, 210, 30], [12, 210, 70], [13, 210, 130], [14, 210, 170], [15, 210, 230], [16, 210, 270],
+  [17, 300, 30], [18, 300, 70], [19, 300, 130], [20, 300, 170], [21, 300, 230], [22, 300, 270],
+
+  [23, 120, 330], [24, 120, 370], [25, 160, 330], [26, 160, 370],
+  [27, 220, 330], [28, 220, 370], [29, 260, 330], [30, 260, 370], [31, 300, 330], [32, 300, 370],
+
+  [33, 400, 30], [34, 400, 70], [35, 400, 110], [36, 400, 150], [37, 400, 190], [38, 400, 230], [39, 400, 270], [40, 400, 310],
+  [41, 440, 30], [42, 440, 70], [43, 440, 110], [44, 440, 150], [45, 440, 190], [46, 440, 230], [47, 440, 270], [48, 440, 310],
+  [49, 510, 30], [50, 510, 100], [51, 510, 170], [52, 510, 240], [53, 510, 310]
+];
+
+const container = document.getElementById('container');
+
+seats.forEach(([num, left, top]) => {
+  const seat = document.createElement('div');
+  seat.className = 'seat';
+  seat.innerText = num;
+  seat.style.left = left + 'px';
+  seat.style.top = top + 'px';
+
+  seat.addEventListener('click', () => {
+    seat.classList.toggle('occupied');
+  });
+
+  container.appendChild(seat);
+});
+</script>
+
+</body>
+</html>
