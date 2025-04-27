@@ -81,7 +81,7 @@ const sheetId = "1cKx6lngayU_DIGUBg_403uC2phn0ZXGYyJK4037IYfs";
 const apiKey = "AIzaSyDER31yuEa0w-7ALKHLYoF-pZVpWXhe5tY";
 
 async function fetchOccupiedSeats() {
-  const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/Sheet1!A1:B100?key=${apiKey}`;
+  const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/Sheet1!A2:B100?key=${apiKey}`;
   const response = await fetch(url);
   const data = await response.json();
   const values = data.values || [];
