@@ -23,7 +23,7 @@
       position: absolute;
       width: 40px;
       height: 40px;
-      background-color: #ffffff; /* 기본 하얀색 (빈 자리) */
+      background-color: #ffffff; /* 기본 빈 자리 */
       border: 1px solid #aaa;
       border-radius: 6px;
       display: flex;
@@ -65,6 +65,9 @@
 <script>
 const container = document.getElementById('container');
 
+// 여기 있는 occupiedSeats 배열만 수정하면 됨!
+const occupiedSeats = new Set([1, 2, 5, 7, 13]); // 예시: 1번, 2번, 5번, 7번, 13번이 사용 중
+
 const seats = [
   [1, 30, 30], [2, 30, 100], [3, 30, 170], [4, 30, 240],
   [5, 120, 30], [6, 120, 70], [7, 120, 130], [8, 120, 170], [9, 120, 230], [10, 120, 270],
@@ -77,46 +80,21 @@ const seats = [
   [49, 510, 30], [50, 510, 100], [51, 510, 170], [52, 510, 240], [53, 510, 310]
 ];
 
-const sheetId = "1zuaGDIPD2UK3tFVnkn-Av3zg0vuPix5Axqyzbzhb6Dc";
-const apiKey = "AIzaSyDER31yuEa0w-7ALKHLYoF-pZVpWXhe5tY";
-
-async function fetchOccupiedSeats() {
-  const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/Sheet1!A2:B100?key=${apiKey}`;
-  const response = await fetch(url);
-  const data = await response.json();
-  const values = data.values || [];
-
-  const occupiedSeats = new Set();
-  values.forEach(([seatNum, status]) => {
-    if (status && status.toLowerCase() === 'occupied') {
-      occupiedSeats.add(Number(seatNum));
-    }
-  });
-
-  return occupiedSeats;
-}
-
-function renderSeats(occupiedSet) {
+function renderSeats() {
   seats.forEach(([num, left, top]) => {
     const seat = document.createElement('div');
     seat.className = 'seat';
-    seat.innerText = num;  // ★ 여기도 확실히 수정
+    seat.innerText = num;
     seat.style.left = left + 'px';
     seat.style.top = top + 'px';
-    if (occupiedSet.has(num)) {
+    if (occupiedSeats.has(num)) {
       seat.classList.add('occupied');
     }
     container.appendChild(seat);
   });
 }
 
-// 자리 그리기
-fetchOccupiedSeats().then(renderSeats);
-
-// 5분마다 새로고침
-setInterval(() => {
-  location.reload();
-}, 300000);
+renderSeats();
 </script>
 
 </body>
